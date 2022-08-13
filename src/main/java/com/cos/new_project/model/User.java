@@ -29,7 +29,7 @@ public class User {
 	
 	@Id	//pk
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;	//시퀀스,auto_increment
+	private int id;	//시퀀스,auto_increment
 	
 	@Column(nullable=false, length=30)
 	private String username;	//아이디
