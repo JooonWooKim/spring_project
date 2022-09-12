@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.new_project.controller.dto.ResponserDto;
+import com.cos.new_project.model.RoleType;
 import com.cos.new_project.model.User;
 import com.cos.new_project.service.UserService;
 
@@ -20,8 +21,9 @@ public class UserApiController {
 	public ResponserDto<Integer> save(@RequestBody User user) {
 		//username, password, email
 		System.out.println("save호출");
+		user.setRole(RoleType.USER);
 		int result = userService.회원가입(user);
-		return new ResponserDto<Integer>(HttpStatus.OK, result);
+		return new ResponserDto<Integer>(HttpStatus.OK.value(), result);
 		//1이면 성공, -1이면 실패
 	}
 }
