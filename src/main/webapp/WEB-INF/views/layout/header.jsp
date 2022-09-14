@@ -18,7 +18,7 @@
 <body>
 
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-		<a class="navbar-brand" href="/blog">Home</a>
+		<a class="navbar-brand" href="/">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
@@ -29,19 +29,19 @@
 				<c:when test="${empty sessionScope.principal}">
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link"
-							href="/blog/user/loginForm">로그인</a></li>
+							href="/loginForm">로그인</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="/blog/user/joinForm">회원가입</a></li>
+							href="/joinForm">회원가입</a></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link"
-							href="/blog/user/writeForm">글쓰기</a></li>
+							href="/board/form">글쓰기</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="/blog/user/userForm">회원정보</a></li>
+							href="/user/form">회원정보</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="/blog/user/logout">로그아웃</a></li>
+							href="/logout">로그아웃</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>
