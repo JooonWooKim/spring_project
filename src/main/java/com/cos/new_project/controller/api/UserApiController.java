@@ -19,7 +19,7 @@ public class UserApiController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/api/user")
+	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) {
 		//username, password, email
 		System.out.println("save호출");
@@ -28,20 +28,4 @@ public class UserApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 		//1이면 성공, -1이면 실패
 	}
-	
-//	@PostMapping("/api/user/login")
-//	public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) {
-//		//username, password, email
-//		System.out.println("login호출");
-//		User principal = userService.로그인(user);
-//	
-//		if(principal != null) {
-//			session.setAttribute("principal", principal);
-//		}
-//		//principal(접근주체)
-//		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-//		//1이면 성공, -1이면 실패
-//	}
-	
-	
 }
