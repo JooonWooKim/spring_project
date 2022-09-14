@@ -29,17 +29,19 @@ public class UserApiController {
 		//1이면 성공, -1이면 실패
 	}
 	
-	@PostMapping("/api/user/login")
-	public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) {
-		//username, password, email
-		System.out.println("login호출");
-		User principal = userService.로그인(user);
+//	@PostMapping("/api/user/login")
+//	public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) {
+//		//username, password, email
+//		System.out.println("login호출");
+//		User principal = userService.로그인(user);
+//	
+//		if(principal != null) {
+//			session.setAttribute("principal", principal);
+//		}
+//		//principal(접근주체)
+//		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+//		//1이면 성공, -1이면 실패
+//	}
 	
-		if(principal != null) {
-			session.setAttribute("principal", principal);
-		}
-		//principal(접근주체)
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-		//1이면 성공, -1이면 실패
-	}
+	
 }
