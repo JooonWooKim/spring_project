@@ -22,6 +22,4 @@ public class UserController {
 		
 		return "user/loginForm";
 	}
-	
-	
 }
