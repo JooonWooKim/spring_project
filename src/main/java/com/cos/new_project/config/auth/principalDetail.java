@@ -8,10 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cos.new_project.model.User;
 
-public class principalDetail implements UserDetails{
+import lombok.Getter;
+
+@Getter
+public class PrincipalDetail implements UserDetails{
 	private User user;	//컴포지션, 상속과 다른 개념
 
-	public principalDetail(User user) {
+	public PrincipalDetail(User user) {
 		this.user = user;
 	}
 	

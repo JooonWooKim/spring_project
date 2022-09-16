@@ -10,7 +10,7 @@ import com.cos.new_project.model.User;
 import com.cos.new_project.repository.UserRepository;
 
 @Service
-public class principalDetailService implements UserDetailsService{
+public class PrincipalDetailService implements UserDetailsService{
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -25,6 +25,6 @@ public class principalDetailService implements UserDetailsService{
 				.orElseThrow(()->{
 					return new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다.:"+username);
 				});
-		return new principalDetail(principal);	//시큐리티의 세션에 유저 정보가 저장.id:user, password: 콘솔창에 뜬 패스워드
+		return new PrincipalDetail(principal);	//시큐리티의 세션에 유저 정보가 저장.id:user, password: 콘솔창에 뜬 패스워드
 	}
 }

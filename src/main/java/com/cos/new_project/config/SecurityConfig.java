@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.cos.new_project.config.auth.principalDetailService;
+import com.cos.new_project.config.auth.PrincipalDetailService;
 
 //빈 등록: 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
 
@@ -23,7 +23,7 @@ import com.cos.new_project.config.auth.principalDetailService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private principalDetailService princiaplDetailService;
+	private PrincipalDetailService princiaplDetailService;
 	
 	@Bean
 	//IoC가 된다.
