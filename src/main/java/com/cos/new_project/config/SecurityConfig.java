@@ -14,12 +14,9 @@ import com.cos.new_project.config.auth.PrincipalDetailService;
 
 //빈 등록: 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
 
-@Configuration
-//빈 등록(IoC관리)
-@EnableWebSecurity
-//시큐리티 필터가 등록이 된다.
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-//특정 주소로 접근하면 권한 인증을 미리 체크 
+@Configuration 	//빈 등록(IoC관리)
+@EnableWebSecurity	//시큐리티 필터가 등록이 된다.
+@EnableGlobalMethodSecurity(prePostEnabled = true)	//특정 주소로 접근하면 권한 인증을 미리 체크 
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
