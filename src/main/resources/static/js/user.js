@@ -3,6 +3,9 @@ let index = {
 		$("#btn-save").on("click",()=>{	//function(){}, ()=>{} this를 바인딩하기 위해서
 			this.save();
 		});
+		$("#btn-update").on("click",()=>{	//function(){}, ()=>{} this를 바인딩하기 위해서
+			this.update();
+		});
 	},
 
 	save: function(){
@@ -26,6 +29,28 @@ let index = {
 		}).done(function(resp){
 			alert("회원가입이 완료되었습니다.");
 			console.log(resp);
+			location.href = "/";
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
+		//ajax 통신을 이용해서 3개의 객체를 json으로 변경하여 insert요청
+	},
+	
+	update: function(){
+		let data = {
+			id: $("#id").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		}
+
+		$.ajax({
+			type:"PUT",
+			url: "/user",
+			data: JSON.stringify(data),	//http body데이터
+			contentType: "application/json; charset=utf-8",	
+			dataType: "json"
+		}).done(function(resp){
+			alert("회원수정이 완료되었습니다.");
 			location.href = "/";
 		}).fail(function(error){
 			alert(JSON.stringify(error));
