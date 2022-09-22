@@ -5,21 +5,34 @@
 
 <div class="container">
 	<form>
-		<input type="hidden" id="id" value="${principal.user.id}"/>
+		<input type="hidden" id="id" value="${principal.user.id}" />
 		<div class="form-group">
-			<label for="username">Username</label> 
-			<input type="text" value="${principal.user.username}" class="form-control" placeholder="Enter username" id="username" readonly>
+			<label for="username">Username</label> <input type="text"
+				value="${principal.user.username}" class="form-control"
+				placeholder="Enter username" id="username" readonly>
 		</div>
-		
-		<div class="form-group">
-			<label for="pwd">Password</label> 
-			<input type="password" value="${principal.user.password}" class="form-control" placeholder="Enter password" id="password">
-		</div>
-		
-		<div class="form-group">
-			<label for="email">Email</label> 
-			<input type="email" value="${principal.user.email}" class="form-control" placeholder="Enter email" id="email">
-		</div>
+
+		<!-- 카카오로 로그인한 사람들은 개인 정보 수정 불가 -->
+		<c:if test="${empty principal.user.oauth}">
+			<div class="form-group">
+				<label for="pwd">Password</label> <input type="password"
+					class="form-control" placeholder="Enter password" id="password">
+			</div>
+			
+			<div class="form-group">
+				<label for="email">Email</label> <input type="email"
+					value="${principal.user.email}" class="form-control"
+					placeholder="Enter email" id="email">
+			</div>
+		</c:if>
+	
+		<c:if test="${not empty principal.user.oauth}">
+			<div class="form-group">
+				<label for="email">Email</label> <input type="email"
+					value="${principal.user.email}" class="form-control"
+					placeholder="Enter email" id="email" readOnly>
+			</div>
+		</c:if>
 
 	</form>
 	<button id="btn-update" class="btn btn-primary">회원수정완료</button>
