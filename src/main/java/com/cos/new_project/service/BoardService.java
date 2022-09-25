@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.new_project.controller.dto.ReplySaveRequestDto;
 import com.cos.new_project.model.Board;
 import com.cos.new_project.model.Reply;
 import com.cos.new_project.model.RoleType;
@@ -25,6 +26,9 @@ public class BoardService {
 	
 	@Autowired
 	private ReplyRepository replyRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Transactional
 	public void 글쓰기(Board board, User user) {
@@ -61,16 +65,25 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public void 댓글작성(User user,int boardId ,Reply requestReply) {
+	public void 댓글작성(ReplySaveRequestDto replySaveRequestDto) {
 		
-		Board board = boardRepository.findById(boardId)
+		User user = userRepository.findById(replySaveRequestDto.getUserId())
+				.orElseThrow(()->{
+					return new IllegalArgumentException("댓글 작성 실패: 유저id를 찾을 수 없음.");
+				});
+		
+		Board board = boardRepository.findById(replySaveRequestDto.getBoardId())
 				.orElseThrow(()->{
 					return new IllegalArgumentException("댓글 작성 실패: 게시글id를 찾을 수 없음.");
 				});
+		//게시글id, 유저id 영속화
 		
-		requestReply.setUser(user);
-		requestReply.setBoard(board);
+		Reply reply = Reply.builder()
+				.user(user)
+				.board(board)
+				.content(replySaveRequestDto.getContent())
+				.build();
 		
-		replyRepository.save(requestReply);
+		replyRepository.save(reply);
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.new_project.config.auth.PrincipalDetail;
+import com.cos.new_project.controller.dto.ReplySaveRequestDto;
 import com.cos.new_project.controller.dto.ResponseDto;
 import com.cos.new_project.model.Board;
 import com.cos.new_project.model.Reply;
@@ -42,8 +43,8 @@ public class BoardApiController {
 	}
 	
 	@PostMapping("/api/board/{boardId}/reply")
-	public ResponseDto<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
-		boardService.댓글작성(principal.getUser(),boardId ,reply);
+	public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto) {
+		boardService.댓글작성(replySaveRequestDto);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 }

@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.cos.new_project.controller.dto.ReplySaveRequestDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,5 +47,4 @@ public class Reply {	//답변
 	@CreationTimestamp
 	private Timestamp createDate;
 	
-
 }
