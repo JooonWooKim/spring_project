@@ -19,11 +19,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder	//빌더 패턴
 @Entity	//Board 클래스가 mysql 테이블에 생성이 된다.
+@Data
 public class Reply {	//답변
 	
 	@Id

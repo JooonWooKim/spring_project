@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.new_project.model.Board;
+import com.cos.new_project.model.Reply;
 import com.cos.new_project.model.RoleType;
 import com.cos.new_project.model.User;
 import com.cos.new_project.repository.BoardRepository;
@@ -21,6 +22,9 @@ public class BoardService {
 
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 
 	@Transactional
 	public void 글쓰기(Board board, User user) {
@@ -54,5 +58,19 @@ public class BoardService {
 				});
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
+	}
+	
+	@Transactional
+	public void 댓글작성(User user,int boardId ,Reply requestReply) {
+		
+		Board board = boardRepository.findById(boardId)
+				.orElseThrow(()->{
+					return new IllegalArgumentException("댓글 작성 실패: 게시글id를 찾을 수 없음.");
+				});
+		
+		requestReply.setUser(user);
+		requestReply.setBoard(board);
+		
+		replyRepository.save(requestReply);
 	}
 }
