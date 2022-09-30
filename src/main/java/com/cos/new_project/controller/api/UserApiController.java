@@ -1,7 +1,9 @@
 package com.cos.new_project.controller.api;
 
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
+
+import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +34,14 @@ public class UserApiController {
 	private AuthenticationManager authenticationManager;
 	
 	@PostMapping("/auth/joinProc")
-	public ResponseDto<Integer> save(@RequestBody User user) {
+	public ResponseDto<?> joinProc(@Valid @RequestBody User user, BindingResult bindingResult) {
 		//username, password, email
+		if(bindingResult.hasErrors()) {
+			//회원가입 실패시 입력 데이터 값을 유
+			Map<String, String> validatorResult = userService.validationHandling(bindingResult);
+			//실패면 로그인페이지이
+			return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), validatorResult);
+		}
 		System.out.println("save호출");
 		userService.회원가입(user);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);

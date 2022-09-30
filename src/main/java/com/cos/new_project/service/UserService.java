@@ -1,10 +1,16 @@
 package com.cos.new_project.service;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
 import com.cos.new_project.model.RoleType;
 import com.cos.new_project.model.User;
@@ -49,5 +55,17 @@ public class UserService {
 			persistance.setPassword(encPassword);
 			persistance.setEmail(user.getEmail());
 		}
+	}
+	
+	//회원가입 시, 유효성 체
+	@Transactional(readOnly = true)
+	public Map<String, String> validationHandling(BindingResult bindingResult){
+		Map<String, String>validatorResult = new HashMap<>();
+		
+		for(FieldError error : bindingResult.getFieldErrors()) {
+			String valiKeyName = String.format("valid_%s",error.getField());
+			validatorResult.put(valiKeyName, error.getDefaultMessage());
+		}
+		return validatorResult;
 	}
 }
