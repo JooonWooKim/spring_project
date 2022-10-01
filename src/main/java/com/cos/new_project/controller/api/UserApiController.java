@@ -11,10 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,15 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.new_project.controller.dto.ResponseDto;
 import com.cos.new_project.model.User;
 import com.cos.new_project.service.UserService;
+import com.cos.new_project.validator.CheckEmailValidator;
+import com.cos.new_project.validator.CheckUsernameValidator;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class UserApiController {
 
 	@Autowired
 	private UserService userService;
+	private final CheckUsernameValidator checkUsernameValidator;
+	private final CheckEmailValidator checkEmailValidator;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@InitBinder
+	public void validatorBinder(WebDataBinder binder) {
+		binder.addValidators(checkUsernameValidator);
+		binder.addValidators(checkEmailValidator);
+	}
 	
 	@PostMapping("/auth/joinProc")
 	public ResponseDto<?> joinProc(@Valid @RequestBody User user, BindingResult bindingResult) {

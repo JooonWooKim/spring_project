@@ -29,20 +29,20 @@ let index = {
 		}).done(function(resp) {
 			if (resp.status == 400) {
 				alert("회원가입에 실패하었습니다.");
-				
-				if(resp.data.hasOwnProperty('valid_username')){
+
+				if (resp.data.hasOwnProperty('valid_username')) {
 					$('#valid_username').text(resp.data.valid_username);
 					$('#valid_username').css('color', 'red');
 				}
 				else $('#valid_username').text('');
-				
-				if(resp.data.hasOwnProperty('valid_password')){
+
+				if (resp.data.hasOwnProperty('valid_password')) {
 					$('#valid_password').text(resp.data.valid_password);
 					$('#valid_password').css('color', 'red');
 				}
 				else $('#valid_password').text('');
-				
-				if(resp.data.hasOwnProperty('valid_email')){
+
+				if (resp.data.hasOwnProperty('valid_email')) {
 					$('#valid_email').text(resp.data.valid_email);
 					$('#valid_email').css('color', 'red');
 				}
@@ -50,7 +50,7 @@ let index = {
 			}
 			else {
 				alert("회원가입이 완료되었습니다.");
-				location.href = "/";	
+				location.href = "/";
 			}
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
@@ -65,14 +65,28 @@ let index = {
 			password: $("#password").val(),
 			email: $("#email").val()
 		}
+		
+		if(!data.username|| data.username.trim() === "" || !data.password || data.password.trim() === "") {            
+			alert("공백 또는 입력하지 않은 부분이 있습니다.");            
+			return false;        
+		} else if(!/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}/.test(data.password)) {            
+			alert("비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");            
+			$('#password').focus();            
+			return false;        
+		}
 
 		$.ajax({
 			type: "PUT",
 			url: "/user",
 			data: JSON.stringify(data),	//http body데이터
 			contentType: "application/json; charset=utf-8",
-			dataType: "json"
+			//dataType: "json"
 		}).done(function(resp) {
+			console.log(resp.status);
+			if(resp.status === 500){
+				alert("회원수정이 실패하였습니다.");
+				return false;
+			}
 			alert("회원수정이 완료되었습니다.");
 			location.href = "/";
 		}).fail(function(error) {
