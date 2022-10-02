@@ -10,6 +10,7 @@
 			<div class="card-body">
 				<h4 class="card-title">${board.title}</h4>
 				<a href="/board/${board.id}" class="btn btn-primary">상세 보기</a>
+				<span style="float:right">Created: ${board.createDate}</span><br>
 			</div>
 		</div>
 	</c:forEach>

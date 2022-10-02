@@ -2,6 +2,7 @@
 package com.cos.new_project.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,6 +51,10 @@ public class Board {
 	
 	@CreationTimestamp
 	private Timestamp createDate;
+	
+	public String getCreateDate() {
+		return new SimpleDateFormat("yyyy.MM.dd").format(createDate);
+	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="userId")
