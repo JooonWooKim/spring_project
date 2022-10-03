@@ -30,7 +30,44 @@
 	</div>
 
 	<hr />
+	
+	<c:choose>
+    <c:when test="${board.recommend_state}">
+        <div style="text-align: center;">
+            <c:choose>
+                <c:when test="${board.user.id != principal.user.id}">
+                    <button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-success" style="display: inline-block;">
+                        추천 <span>${board.recommend_count}</span>
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-success" style="display: inline-block;" disabled>
+                        추천 <span>${board.recommend_count}</span>
+                    </button>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <div style="text-align: center;">
+            <c:choose>
+                <c:when test="${board.user.id != principal.user.id}">
+                    <button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-outline-success" style="display: inline-block;">
+                        추천 <span>${board.recommend_count}</span>
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-outline-success" style="display: inline-block;" disabled>
+                        추천 <span>${board.recommend_count}</span>
+                    </button>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </c:otherwise>
+</c:choose>
 
+	<hr />
+	
 	<div class="card">
 		<form>
 			<input type="hidden" id="userId" value="${principal.user.id}" /> 

@@ -19,6 +19,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -64,5 +65,17 @@ public class Board {
 	@JsonIgnoreProperties({"board"})
 	@OrderBy("id desc")
 	private List<Reply> replys;
+	
+	@OneToMany(mappedBy = "board", cascade= CascadeType.REMOVE)
+	private List<Recommend> recommends;
+	
+	@Transient
+	//@Transient를 사용해서, 데이터베이스에는 해당 칼럼이 생성하지 않게끔 방지 
+	private boolean recommend_state;
+	//추천 상태 
+	
+	@Transient
+	private int recommend_count;
+	//추천 개수 
 	
 }

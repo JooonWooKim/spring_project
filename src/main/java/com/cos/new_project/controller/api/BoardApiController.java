@@ -17,12 +17,19 @@ import com.cos.new_project.controller.dto.ResponseDto;
 import com.cos.new_project.model.Board;
 import com.cos.new_project.model.Reply;
 import com.cos.new_project.service.BoardService;
+//import com.cos.new_project.service.RecommendService;
+import com.cos.new_project.service.RecommendService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class BoardApiController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	private final RecommendService recommendService;
 	
 	@PostMapping("/api/board")
 	public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
@@ -51,6 +58,18 @@ public class BoardApiController {
 	@DeleteMapping("/api/board/{boardId}/reply/{replyId}")
 	public ResponseDto<Integer>replyDelete(@PathVariable int replyId){
 		boardService.댓글삭제(replyId);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	@PostMapping("/api/board/{board_id}/recommend")
+	public ResponseDto<Integer> recommend(@PathVariable("board_id") Long board_id ,@AuthenticationPrincipal PrincipalDetail principal){
+		recommendService.recommend(board_id, principal.getUser().getId());
+		return new ResponseDto<Integer>(HttpStatus.CREATED.value(), 1);
+	}
+	
+	@DeleteMapping("/api/board/{board_id}/recommend")
+	public ResponseDto<Integer> cancelRecommend(@PathVariable("board_id") Long board_id, @AuthenticationPrincipal PrincipalDetail principal){
+		recommendService.cancelRecommend(board_id, principal.getUser().getId());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 

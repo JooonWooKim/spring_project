@@ -23,7 +23,10 @@ import com.cos.new_project.model.User;
 import com.cos.new_project.repository.BoardRepository;
 import com.cos.new_project.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 
 	@Autowired
@@ -48,10 +51,11 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public Board 글상세보기(int id, HttpServletRequest request, HttpServletResponse response) {
+	public Board 글상세보기(int id, HttpServletRequest request, HttpServletResponse response, Long principal_id) {
 		String str = Integer.toString(id);
 		Cookie oldCookie = null;
 		Cookie[] cookies = request.getCookies();
+		
 		if(cookies != null) {
 			for(Cookie cookie: cookies) {
 				if(cookie.getName().equals("boardView")) {
@@ -77,10 +81,20 @@ public class BoardService {
 			newCookie.setMaxAge(60*60*24);
 			response.addCookie(newCookie);
 		}
-		return boardRepository.findById(id)
-				.orElseThrow(()->{
+		
+		Board board = boardRepository.findById(id).orElseThrow(()->{
 					return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없음.");
 				});
+		
+		board.getRecommends().forEach((recommend) ->{
+			if(recommend.getUser().getId() == principal_id) {
+				board.setRecommend_state(true);
+			}
+		});
+		
+		board.setRecommend_count(board.getRecommends().size());
+		
+		return board;
 	}
 	
 	@Transactional

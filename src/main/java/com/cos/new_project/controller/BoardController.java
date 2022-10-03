@@ -23,35 +23,38 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	
+
 	@Autowired
 	private BoardRepository boardRepository;
-	
+
 //	@AuthenticationPrincipal principalDetail principal
 
-	@GetMapping({"", "/"})
-	public String index(Model model, @PageableDefault(size=3,sort="id",direction=Sort.Direction.DESC)Pageable pageable,
-			@RequestParam(value= "searchKeyword", required = false)String searchKeyword) {
-		if(searchKeyword == null) {
+	@GetMapping({ "", "/" })
+	public String index(Model model,
+			@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+		if (searchKeyword == null) {
 			model.addAttribute("boards", boardService.글목록(pageable));
-		}else {
+		} else {
 			model.addAttribute("boards", boardRepository.findByTitleContaining(searchKeyword, pageable));
 		}
 		return "index";
 	}
-	
+
 	@GetMapping("/board/{id}")
-	public String findById(@PathVariable int id, Model model, HttpServletRequest httpServletRequest, HttpServletResponse response) {
-		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response));
+	public String findById(@PathVariable int id, Model model, HttpServletRequest httpServletRequest,
+			HttpServletResponse response, Long principal_id) {
+		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response, principal_id));
 		return "board/detail";
 	}
-	
+
 	@GetMapping("board/{id}/updateForm")
-	public String upateForm(@PathVariable int id, Model model, HttpServletRequest httpServletRequest, HttpServletResponse response) {
-		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response));
+	public String upateForm(@PathVariable int id, Model model, HttpServletRequest httpServletRequest,
+			HttpServletResponse response, long principal_id) {
+		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response, principal_id));
 		return "board/updateForm";
 	}
-	
+
 	@GetMapping("/board/saveForm")
 	public String saveForm() {
 		return "board/saveForm";

@@ -33,7 +33,7 @@ public class User {
 	
 	@Id	//pk
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;	//시퀀스,auto_increment
+	private Long id;	//시퀀스,auto_increment
 	
 	@Column(nullable=false, length=100, unique = true)
 	@NotBlank(message = "아이디는 필수 입력 값입니다.")

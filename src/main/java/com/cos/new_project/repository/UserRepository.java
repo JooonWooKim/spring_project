@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.cos.new_project.model.User;
 
 //DAO
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Long>{
 
 	//select * from user where username = ?;
 	Optional<User> findByUsername(String username);

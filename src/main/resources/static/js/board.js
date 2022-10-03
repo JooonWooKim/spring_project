@@ -110,7 +110,69 @@ let index = {
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
-	}
+	},
+	
+	recommend: function(board_id, recommend_state) {
+        let recommend = $("#btn-recommend");
+        if (!recommend_state) {
+            $.ajax({
+                type: "POST",
+                url: `/api/board/${board_id}/recommend`,
+                dataType: "json"
+            }).done(resp => {
+                recommend.removeClass("btn-outline-success");
+                recommend.addClass("btn-success");
+
+                location.reload();
+            }).fail(error => {
+                console.log(error);
+            });
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/board/${board_id}/recommend`,
+                dataType: "json"
+            }).done(resp => {
+                recommend.removeClass("btn-success");
+                recommend.addClass("btn-outline-success");
+
+                location.reload();
+            }).fail(error => {
+                console.log(error);
+            });
+        }
+    },
+    
+    recommend: function(board_id, recommend_state) {
+        let recommend = $("#btn-recommend");
+        if (!recommend_state) {
+            $.ajax({
+                type: "POST",
+                url: `/api/board/${board_id}/recommend`,
+                dataType: "json"
+            }).done(resp => {
+                recommend.removeClass("btn-outline-success");
+                recommend.addClass("btn-success");
+
+                location.reload();
+            }).fail(error => {
+                console.log(error);
+            });
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/board/${board_id}/recommend`,
+                dataType: "json"
+            }).done(resp => {
+                recommend.removeClass("btn-success");
+                recommend.addClass("btn-outline-success");
+
+                location.reload();
+            }).fail(error => {
+                console.log(error);
+            });
+        }
+    }
 }
 
 index.init();
