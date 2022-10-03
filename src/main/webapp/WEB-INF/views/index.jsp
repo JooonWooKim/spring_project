@@ -5,6 +5,13 @@
 <%@ include file="layout/header.jsp"%>
 
 <div class="container">
+    <form action="/" method="GET" class="form-inline p-2 bd-highlight">
+        <div>
+            <input type="text" name="searchKeyword" class="form-control" placeholder="검색">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    
 	<c:forEach var="board" items="${boards.content}">
 		<div class="card m-2">
 			<div class="card-body">
@@ -23,7 +30,7 @@
 			</c:when>
 			<c:otherwise>
 				<li class="page-item"><a class="page-link"
-					href="?page=${boards.number-1}">Previous</a></li>
+					href="?page=${boards.number-1}&searchKeyword=${param.searchKeyword}">Previous</a></li>
 			</c:otherwise>
 		</c:choose>
 
@@ -34,7 +41,7 @@
 			</c:when>
 			<c:otherwise>
 				<li class="page-item"><a class="page-link"
-					href="?page=${boards.number+1}">Next</a></li>
+					href="?page=${boards.number+1}&searchKeyword=${param.searchKeyword}">Next</a></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>
