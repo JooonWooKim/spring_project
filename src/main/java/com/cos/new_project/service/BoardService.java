@@ -1,7 +1,12 @@
 package com.cos.new_project.service;
 
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,8 +48,35 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public Board 글상세보기(int id) {
-		boardRepository.updateCount(id);
+	public Board 글상세보기(int id, HttpServletRequest request, HttpServletResponse response) {
+		String str = Integer.toString(id);
+		Cookie oldCookie = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			for(Cookie cookie: cookies) {
+				if(cookie.getName().equals("boardView")) {
+					oldCookie = cookie;
+				}
+			}
+		}
+		
+		if(oldCookie != null) {
+			if(!oldCookie.getValue().contains("[" + str + "]")) {
+				boardRepository.updateCount(id);
+				oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+				oldCookie.setPath("/");
+				oldCookie.setMaxAge(60*60*24);
+				response.addCookie(oldCookie);
+			}
+		}
+		
+		else {
+			boardRepository.updateCount(id);
+			Cookie newCookie = new Cookie("boardView", "[" + id + "]");
+			newCookie.setPath("/");
+			newCookie.setMaxAge(60*60*24);
+			response.addCookie(newCookie);
+		}
 		return boardRepository.findById(id)
 				.orElseThrow(()->{
 					return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없음.");

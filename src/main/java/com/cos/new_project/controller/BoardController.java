@@ -1,5 +1,8 @@
 package com.cos.new_project.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,14 +31,14 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/{id}")
-	public String findById(@PathVariable int id, Model model) {
-		model.addAttribute("board", boardService.글상세보기(id));
+	public String findById(@PathVariable int id, Model model, HttpServletRequest httpServletRequest, HttpServletResponse response) {
+		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response));
 		return "board/detail";
 	}
 	
 	@GetMapping("board/{id}/updateForm")
-	public String upateForm(@PathVariable int id, Model model) {
-		model.addAttribute("board", boardService.글상세보기(id));
+	public String upateForm(@PathVariable int id, Model model, HttpServletRequest httpServletRequest, HttpServletResponse response) {
+		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response));
 		return "board/updateForm";
 	}
 	
