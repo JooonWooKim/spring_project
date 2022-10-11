@@ -17,4 +17,5 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	void updateCount(int id);
 	
 	Page<Board> findByTitleContaining(String searchKeyword, Pageable pageable);
+	
 }

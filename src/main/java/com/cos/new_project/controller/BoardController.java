@@ -18,7 +18,10 @@ import com.cos.new_project.config.auth.PrincipalDetail;
 import com.cos.new_project.repository.BoardRepository;
 import com.cos.new_project.service.BoardService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class BoardController {
 
 	@Autowired
@@ -32,8 +35,9 @@ public class BoardController {
 	@GetMapping({ "", "/" })
 	public String index(Model model,
 			@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+//			@RequestParam(value="searchType", defaultValue = "title") String searchType,
 			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-		if (searchKeyword == null) {
+		if (searchKeyword == null) { 
 			model.addAttribute("boards", boardService.글목록(pageable));
 		} else {
 			model.addAttribute("boards", boardRepository.findByTitleContaining(searchKeyword, pageable));
@@ -49,9 +53,9 @@ public class BoardController {
 	}
 
 	@GetMapping("board/{id}/updateForm")
-	public String upateForm(@PathVariable int id, Model model, HttpServletRequest httpServletRequest,
-			HttpServletResponse response, long principal_id) {
-		model.addAttribute("board", boardService.글상세보기(id, httpServletRequest, response, principal_id));
+	public String upateForm(@PathVariable int id, Model model, HttpServletRequest request, 
+			HttpServletResponse response, Long principal_id) {
+		model.addAttribute("board", boardService.글상세보기(id, request, response, principal_id));
 		return "board/updateForm";
 	}
 

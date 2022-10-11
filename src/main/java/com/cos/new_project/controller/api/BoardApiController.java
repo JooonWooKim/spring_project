@@ -1,9 +1,13 @@
 package com.cos.new_project.controller.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +20,8 @@ import com.cos.new_project.controller.dto.ReplySaveRequestDto;
 import com.cos.new_project.controller.dto.ResponseDto;
 import com.cos.new_project.model.Board;
 import com.cos.new_project.model.Reply;
+import com.cos.new_project.repository.BoardRepository;
+import com.cos.new_project.repository.RecommendRepository;
 import com.cos.new_project.service.BoardService;
 //import com.cos.new_project.service.RecommendService;
 import com.cos.new_project.service.RecommendService;
@@ -24,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class BoardApiController {
+public class BoardApiController{
 	
 	@Autowired
 	private BoardService boardService;
@@ -55,6 +61,7 @@ public class BoardApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
+	
 	@DeleteMapping("/api/board/{boardId}/reply/{replyId}")
 	public ResponseDto<Integer>replyDelete(@PathVariable int replyId){
 		boardService.댓글삭제(replyId);
@@ -72,5 +79,4 @@ public class BoardApiController {
 		recommendService.cancelRecommend(board_id, principal.getUser().getId());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
-
 }

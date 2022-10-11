@@ -56,7 +56,6 @@ public class Board {
 	public String getCreateDate() {
 		return new SimpleDateFormat("yyyy.MM.dd").format(createDate);
 	}
-	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="userId")
 	private User user;	//DB는 오브젝트를 저장할 수 없다. fk, 자바는 오브젝트를 사용할 수 있다.
@@ -70,7 +69,8 @@ public class Board {
 	private List<Recommend> recommends;
 	
 	@Transient
-	//@Transient를 사용해서, 데이터베이스에는 해당 칼럼이 생성하지 않게끔 방지 
+	//@Transient를 사용해서, 데이터베이스에는 해당 칼럼이 생성하지 않게끔 방지
+	//default = false
 	private boolean recommend_state;
 	//추천 상태 
 	

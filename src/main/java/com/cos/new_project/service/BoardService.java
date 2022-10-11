@@ -21,6 +21,7 @@ import com.cos.new_project.model.Reply;
 import com.cos.new_project.model.RoleType;
 import com.cos.new_project.model.User;
 import com.cos.new_project.repository.BoardRepository;
+import com.cos.new_project.repository.RecommendRepository;
 import com.cos.new_project.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,7 @@ public class BoardService {
 		String str = Integer.toString(id);
 		Cookie oldCookie = null;
 		Cookie[] cookies = request.getCookies();
+		
 		
 		if(cookies != null) {
 			for(Cookie cookie: cookies) {
@@ -95,6 +97,7 @@ public class BoardService {
 		board.setRecommend_count(board.getRecommends().size());
 		
 		return board;
+		
 	}
 	
 	@Transactional

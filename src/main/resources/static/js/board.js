@@ -144,6 +144,7 @@ let index = {
     },
     
     recommend: function(board_id, recommend_state) {
+		console.log(board_id, recommend_state);
         let recommend = $("#btn-recommend");
         if (!recommend_state) {
             $.ajax({

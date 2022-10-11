@@ -5,6 +5,7 @@
 <%@ include file="layout/header.jsp"%>
 
 <div class="container">
+
     <form action="/" method="GET" class="form-inline p-2 bd-highlight">
         <div>
             <input type="text" name="searchKeyword" class="form-control" placeholder="검색">

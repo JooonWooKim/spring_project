@@ -15,7 +15,7 @@
 		<!-- 카카오로 로그인한 사람들은 개인 정보 수정 불가 -->
 		<c:if test="${empty principal.user.oauth}">
 			<div class="form-group">
-				<label for="pwd">Password</label> <input type="password"
+				<label for="pwd">Password</label> <input type="text"
 					class="form-control" placeholder="Enter password" id="password">
 			</div>
 			
